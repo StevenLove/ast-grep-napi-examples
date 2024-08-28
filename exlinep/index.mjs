@@ -12,11 +12,11 @@ const styledToCSS = async (path) => {
     const componentName = node.getMatch("COMPONENT")?.text();
     const tagName = node.getMatch("TAG")?.text();
 
-    //console.log(componentName);
     const cssContent = node.getMatch("CONTENT")?.text();
-    const divNodes = ast.root().findAll(`<${componentName} $$$ARGS>$PROPS</${componentName}>`);
+    const divNodes = ast.root().findAll(`<${componentName} $$$ARGS>$$$PROPS</${componentName}>`);
     divNodes.forEach(node=>{
-			console.log(`result: ${node.getMatch("PROPS")?.text()}`);
+			const divContent = node.getMultipleMatches("PROPS").map((n) => n.text()).join("");
+			console.log(`\nContents of ${componentName}: ${divContent}`);
 		})
 
     fs.appendFile(
